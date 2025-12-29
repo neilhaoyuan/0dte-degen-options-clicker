@@ -1,1 +1,1 @@
-# 1DTE Degen Options Clicker
+# 0 Days Til Expiration: Degenerate Options Gambling Simulator
