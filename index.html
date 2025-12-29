@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Options Trader</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+<body>
+
+    <!-- Creating status bar at top of screen, holds cash, level and xp -->
+    <div class="status-bar">
+        <div class="stat">
+            <span class="label">Cash:</span>
+            <span id="cash" class="value">$10.00</span>
+        </div>
+
+        <div class="stat">
+            <span class="label">Level:</span>
+            <span id="level" class="value">1</span>
+        </div>
+
+        <div class="stat">
+            <span class="label">XP:</span>
+            <span id="xp" class="value">0/100</span>
+        </div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="main-content">
+
+        <!-- Left side, holds stock chart -->
+        <div class="left-panel">
+            <div class="stock-header">
+                <h2>$DGEN</h2>
+                <div id="stock-price" class="stock-price">$100.00</div>
+                <div id="stock-change" class="stock-change">+$0.00</div>
+            </div>
+
+            <div class="stock-chart">
+                <canvas id="price-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Right side, holds options purchasing and current purchases -->
+        <div class="right-panel">
+            <div class="buy-option">
+                <h3>Available Options</h3>
+                <div class="refresh-timer">New options in: <span id="countdown">10s</span></div>
+
+                <!-- Grid that shows the options that can be bought, split into Calls and Puts -->
+                <div class="options-grid">
+                    <div class="call-column">
+                        <h4>Purchase Calls</h4>
+                        <div id="call-options">Options loading...</div>
+                    </div>
+
+                    <div class="puts-column">
+                        <h4>Purchase Puts</h4>
+                        <div id="put-options">Options loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="current-positions">
+                <h3>Active Positions</h3>
+                <div id="positions-list" class="positions-list">
+                    <div class="no-positions">No active positions...</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="ui.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
