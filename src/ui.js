@@ -199,3 +199,32 @@ function formatTime(seconds) {
         return hours + 'h ' + minutes + 'm';
     }
 }
+
+// Setups music toggle button
+function setupMusicToggle(bgMusic) {
+    let musicStopped = false;
+    const musicToggle = document.getElementById('music-toggle');
+
+    // Checks if music is currently playing and determines click action accordingly 
+    musicToggle.addEventListener('click', function() {
+        if (musicStopped) {
+            bgMusic.pause();
+            musicToggle.textContent = 'Music OFF';
+            musicStopped = false;
+        } else {
+            bgMusic.play();
+            musicToggle.textContent = 'Music ON';
+            musicStopped = true;
+        }
+    });
+
+    // Return function 
+    return {
+        setPlaying: function(playing) {
+            musicStopped = playing;
+            if (playing) {
+                musicToggle.textContent = 'Music ON';
+            }
+        }
+    };
+}

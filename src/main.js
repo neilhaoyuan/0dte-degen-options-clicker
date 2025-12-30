@@ -3,6 +3,27 @@ let game = new GameLogic();
 let previousPrice = game.stock.getPrice();
 let priceHistory = [game.stock.getPrice()]; // Store price history for chart
 
+// Background music setup
+const playlist = [
+    'assets/music/popcorn-castle.mp3',
+    'assets/music/noodle-cove.mp3',
+    'assets/music/macadamia-hills.mp3',
+    'assets/music/we-were-rivals-now-were-friends.mp3'];
+let currentTrack = 0;
+const bgMusic = document.getElementById('bg-music');
+bgMusic.volume = 0.3;
+
+function loadTrack(index) {
+    bgMusic.src = playlist[index];
+    bgMusic.play();
+}
+
+// When song ends, play next one and loop once all tracks end
+bgMusic.addEventListener('ended', function() {
+    currentTrack = (currentTrack + 1) % playlist.length;
+    loadTrack(currentTrack);
+});
+
 // Load UI 
 window.addEventListener('DOMContentLoaded', function() {
     // Update all UI
@@ -10,7 +31,16 @@ window.addEventListener('DOMContentLoaded', function() {
     updateStockPrice(game.stock.getPrice(), previousPrice);
     generateOptions(game);
     updatePositionsList(game.getUserState().options);
+
+    // Setup music toggle
+    const musicControl = setupMusicToggle(bgMusic);
     
+    // Start music on first click
+    document.addEventListener('click', function() {
+        loadTrack(0);
+        musicControl.setPlaying(true);
+    }, { once: true });
+
     // Create the price chart
     const chart = document.getElementById('price-chart').getContext('2d');
     const priceChart = new Chart(chart, {

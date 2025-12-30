@@ -11,6 +11,10 @@
     <title>Options Trader</title>
 </head>
 <body>
+    <audio id="bg-music">
+        <source src="" type="audio/mpeg">
+    </audio>
+
     <!-- Creating status bar at top of screen, holds cash, level and xp -->
     <div class="status-bar">
         <div class="stat">
@@ -27,6 +31,8 @@
             <span class="label">XP:</span>
             <span id="xp" class="value">0/100</span>
         </div>
+
+        <button id="music-toggle" class="music-toggle">Music ON</button>
     </div>
 
     <!-- Main content area -->
