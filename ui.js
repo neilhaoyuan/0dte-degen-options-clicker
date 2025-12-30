@@ -97,7 +97,7 @@ function generateOptions(gameLogic){
 
         // Building the purchase button and adding click feedback that calls the options buying
         const button = document.createElement('button');
-        button.textContent = 'Strike ' + randomStrike + ' | ' + (randomExpiry/3600) + 'hour | $' + putPrice.toFixed(2);
+        button.textContent = 'Strike ' + randomStrike + ' | ' + (randomExpiry/3600) + ' hour | $' + putPrice.toFixed(2);
         button.addEventListener('click', function() {
             if (gameLogic.cash >= putPrice){
                 gameLogic.cash -= putPrice;
@@ -156,6 +156,11 @@ function updatePositionsList(options){
             timeDiv.textContent = 'Time left: ' + formatTime(option.timeLeft);
             positionDiv.appendChild(timeDiv);
 
+            // Build purchase price
+            const purchaseDiv = document.createElement('div');
+            purchaseDiv.textContent = 'Paid: $' + option.purchasePrice.toFixed(2);
+            positionDiv.appendChild(purchaseDiv);
+
             // Build the value of the position
             const valueDiv = document.createElement('div');
             valueDiv.textContent = 'Current Value: $' + option.currentValue.toFixed(2);
@@ -166,6 +171,11 @@ function updatePositionsList(options){
             plDiv.textContent = 'P/L: ' + profitSign + '$' + profitLoss.toFixed(2);
             plDiv.style.color = profitColor;
             positionDiv.appendChild(plDiv);
+
+            // Build the seperator 
+            const sepDiv = document.createElement('div');
+            sepDiv.textContent = '---------------------';
+            positionDiv.appendChild(sepDiv);
 
             // Append this position and then move to next
             positionsElement.appendChild(positionDiv);

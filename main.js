@@ -16,10 +16,12 @@ window.addEventListener('DOMContentLoaded', function() {
     const priceChart = new Chart(chart, {
         type: 'line',
         data: {
-            labels: Array(priceHistory.length).fill(''),
             datasets: [{
                 data: priceHistory,
                 borderColor: 'rgba(33, 33, 203, 1)',
+                borderWidth: 4.5,
+                pointRadius: 0,
+                stepped: 'before',
                 tension: 0,
                 fill: false
             }]
