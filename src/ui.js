@@ -200,7 +200,7 @@ function formatTime(seconds) {
     }
 }
 
-// Setups music toggle button
+// Setups music toggle button and defines its behaviour
 function setupMusicToggle(bgMusic) {
     let musicStopped = false;
     const musicToggle = document.getElementById('music-toggle');
@@ -213,7 +213,7 @@ function setupMusicToggle(bgMusic) {
             musicStopped = false;
         } else {
             bgMusic.play();
-            musicToggle.textContent = 'Music ON';
+            musicToggle.textContent = 'Music ON!';
             musicStopped = true;
         }
     });
@@ -227,4 +227,102 @@ function setupMusicToggle(bgMusic) {
             }
         }
     };
+}
+
+// Locations of the sprites
+const advisorSprites = {
+    bored: 'assets/sprites/bored_sprite.png',
+    happy: 'assets/sprites/talking_sprite.png',
+    sad: 'assets/sprites/sad_sprite.png',
+    smirking: 'assets/sprites/smirk_sprite.png'
+};
+
+// Lines of each sprite
+const advisorDialogue = {
+    bored: [
+        "Are you gonna trade or just stare at the chart?",
+        "Are you trading or just window shopping?",
+        "Time to yolo or go home, brokie.",
+        "Tick tock, you ain't going to the moon like this.",
+        "Calls on your portfolio btw."
+    ],
+    happy: [
+        "TO THE MOON! 🚀📈🚀📈🚀📈 ",
+        "This is the way! Diamond hands baby!",
+        "Apes together strong! Keep it up!",
+        "Cha-ching! Nice trade!",
+        "That was definitely a thing of all time!"
+    ],
+    sad: [
+        "GUH... thats gotta hurt.",
+        "Paper hands got you again, huh?",
+        "Welcome to the loss hall of fame champ.",
+        "Your wife's boyfriend is gonna hear about this one.",
+        "It's not a loss until you sell... oh wait.",
+    ],
+    smirking: [
+        "Feeling lucky? Let's see if it pays off...",
+        "Bold move. I like your style.",
+        "That's some weapons-grade stupidity right there.",
+        "Risky play... this better print or you're cooked.",
+        "Found the next DFV or the next bag holder?"
+    ]
+};
+
+// Updates the advisor based on the gamestate
+function updateAdvisor(gameState) {
+    let totalPnL = 0;
+
+    // Calculate total profit/loss from all positions
+    for (let i = 0; i < gameState.options.length; i++) {
+        let option = gameState.options[i];
+        let profitLoss = option.currentValue - option.purchasePrice;
+        totalPnL += profitLoss;  // Add to the total
+    }
+    
+    // Determine mood based on total P/L
+    if (totalPnL > 4) {
+        setAdvisorMood('happy'); // Big profit
+    } else if (totalPnL < -4) {
+        setAdvisorMood('sad'); // Big loss
+    } else if (gameState.options.length > 3 && totalPnL < 0) {
+        setAdvisorMood('smirking'); // Many positions
+    } else {
+        setAdvisorMood('bored'); // Nothing happening
+    }
+}
+
+// Updates the advisor sprite and displays text
+function setAdvisorMood(mood) {
+    const sprite = document.getElementById('sprite-image');
+    const text = document.getElementById('advisor-text');
+
+    // Sets sprite to fit moood
+    sprite.src = advisorSprites[mood];
+
+    // Sets dialogue to a random text from proper mood
+    const possibleDialogue = advisorDialogue[mood];
+    const randomDialogue = possibleDialogue[Math.floor(Math.random() * possibleDialogue.length)];
+    text.textContent = randomDialogue;
+}
+
+// Game over quotes
+gameOverQuotes = [
+    '"Sir, this is a casino."',
+    '"What\'s an exit strategy?"',
+    '"I am not a cat."',
+    '"Funding secured."',
+    '"What\'s theta decay?"',
+    "'Rule No.1: Never lose money. Rule No.2: Never forget rule No.1.'",
+    '"What\'s hedging?"',
+    '"We like the stock"'
+];
+
+// Updates the game over screen
+function showGameOver(cash, level) {
+    // Update the stats and then shows the screen
+    document.getElementById('final-cash').textContent = "Final Cash: " + cash.toFixed(2);
+    document.getElementById('final-level').textContent = "Final Level: " + level;
+    document.getElementById('game-over-screen').style.display = 'flex';
+    document.getElementById('game-over-quote').textContent = gameOverQuotes[Math.floor(Math.random() * gameOverQuotes.length)];
 }

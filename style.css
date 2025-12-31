@@ -3,6 +3,68 @@ body{
     margin: 0;
     padding: 20px;
     background-color: #CAE7B9;
+    overflow: hidden;
+}
+
+/* Start page */
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #CAE7B9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.start-text {
+    text-align: center;
+}
+
+.start-content h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.start-content p {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+#start-button {
+    font-family: 'Press Start 2P';
+    font-size: 16px;
+    padding: 16px 32px;
+}
+
+/* Game over page */
+.game-over-content {
+    text-align: center;
+    gap: 20px;
+}
+
+#game-over-quote{
+    margin: 40px
+}
+
+.final-stats{
+    gap: 40px;
+    margin: 40px
+}
+
+#game-over-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #CAE7B9;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
 }
 
 /* Status bar */
@@ -13,17 +75,19 @@ body{
     margin: -20px -20px 12px -20px;
     padding: 12px;
     background-color: #A3D585;
+    justify-content: space-between;
 }
 
 .stat{
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
-.music-toggle{
-    margin-left: 580px;
+#give-up-button{
+    background-color: rgb(225, 103, 103);
 }
 
 .main-content{
+    margin-top: 20px;
     display: flex;
     gap: 20px;
 }
@@ -32,11 +96,30 @@ body{
 
 .left-panel{
     flex: 2;
-    gap:20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .stock-header{
     margin-bottom: 16px;
+}
+
+.stock-chart{
+    height: 50vh;
+    margin-bottom: 0;
+}
+
+.advisor-talking{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.sprite-image {
+    width: 180px;
+    height: 180px;
+    margin-top: -40px;
 }
 
 /* Right panel styling */
@@ -53,10 +136,6 @@ body{
     margin-bottom: 8px;
 }
 
-.stock-chart{
-    height: 50vh;
-}
-
 .refresh-timer{
     margin-bottom: 16px;
 }
@@ -71,7 +150,7 @@ body{
 
 .positions-list {
     font-size: 10px;
-    max-height: 181px;
+    max-height: 190px;
     overflow-y: auto;
     border: 2px solid #000;
     padding: 2px;

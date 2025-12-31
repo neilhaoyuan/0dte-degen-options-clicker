@@ -5,13 +5,13 @@ let priceHistory = [game.stock.getPrice()]; // Store price history for chart
 
 // Background music setup
 const playlist = [
-    'assets/music/popcorn-castle.mp3',
     'assets/music/noodle-cove.mp3',
+    'assets/music/popcorn-castle.mp3',
     'assets/music/macadamia-hills.mp3',
     'assets/music/we-were-rivals-now-were-friends.mp3'];
 let currentTrack = 0;
 const bgMusic = document.getElementById('bg-music');
-bgMusic.volume = 0.3;
+bgMusic.volume = 0.05;
 
 function loadTrack(index) {
     bgMusic.src = playlist[index];
@@ -26,20 +26,32 @@ bgMusic.addEventListener('ended', function() {
 
 // Load UI 
 window.addEventListener('DOMContentLoaded', function() {
-    // Update all UI
+    // Initalize all UI
     updateStatusBar(game.getUserState());
     updateStockPrice(game.stock.getPrice(), previousPrice);
     generateOptions(game);
     updatePositionsList(game.getUserState().options);
+    updateAdvisor(game.getUserState());
 
     // Setup music toggle
     const musicControl = setupMusicToggle(bgMusic);
     
-    // Start music on first click
-    document.addEventListener('click', function() {
+    // Start game and music after clicking start game button
+    document.getElementById('start-button').addEventListener('click', function() {
+        document.getElementById('start-screen').style.display = 'none';
         loadTrack(0);
-        musicControl.setPlaying(true);
-    }, { once: true });
+    });
+
+    // Give up button
+    document.getElementById('give-up-button').addEventListener('click', function() {
+        const gameState = game.getUserState();
+        showGameOver(gameState.cash, gameState.level);
+    });
+
+    // Event listener that restarts the game
+    document.getElementById('restart-button').addEventListener('click', function() {
+        location.reload();
+    });
 
     // Create the price chart
     const chart = document.getElementById('price-chart').getContext('2d');
@@ -80,6 +92,11 @@ window.addEventListener('DOMContentLoaded', function() {
         updateStatusBar(gameState);
         updateStockPrice(gameState.stockPrice, previousPrice);
         updatePositionsList(gameState.options);
+
+        // Update advisor every 5 seconds
+        if (tickCount % 7 === 0){
+            updateAdvisor(gameState);
+        }
         
         // Add new price to history
         priceHistory.push(gameState.stockPrice);
@@ -100,7 +117,7 @@ window.addEventListener('DOMContentLoaded', function() {
         const secondsUntilRefresh = ticksUntilRefresh * 1; // 1s per tick
         document.getElementById('countdown').textContent = secondsUntilRefresh;
         
-        // Refresh options every 10 ticks
+        // Refresh options every 10 ticks and change the advisor message
         if (tickCount % REFRESH_INTERVAL === 0) {
             generateOptions(game);
         }

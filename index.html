@@ -8,9 +8,32 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <meta charset="UTF-8">
-    <title>Options Trader</title>
+    <title>$DGEN Trader</title>
 </head>
 <body>
+    <!-- Start screen -->
+    <div id="start-screen">
+        <div class="start-text">
+            <h1>$DGEN TRADER</h1>
+            <p>You're broke. Get rich.</p>
+            <button id="start-button" class="nes-btn is-primary">START TRADING</button>
+        </div>
+    </div>
+
+    <!-- Game over screen, not shown until user triggers it -->
+    <div id="game-over-screen" style="display: none;">
+        <div class="game-over-content">
+            <div id="game-over-quote">"Sir, this is a casino." - WSB</div>
+            <h1>GAME OVER</h1>
+            <div class="final-stats">
+                <div id="final-cash">1</div>
+                <div id="final-level">1</div>
+            </div>
+            <button id="restart-button" class="nes-btn is-error">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <!-- Audio loading -->
     <audio id="bg-music">
         <source src="" type="audio/mpeg">
     </audio>
@@ -32,7 +55,10 @@
             <span id="xp" class="value">0/100</span>
         </div>
 
-        <button id="music-toggle" class="music-toggle">Music ON</button>
+        <div class="button-group">
+            <button id="music-toggle">Music ON!</button>
+            <button id="give-up-button">Give Up</button>
+        </div>
     </div>
 
     <!-- Main content area -->
@@ -48,6 +74,11 @@
 
             <div class="stock-chart">
                 <canvas id="price-chart"></canvas>
+            </div>
+
+            <div class="advisor-talking">
+                <img src="assets/sprites/bored_sprite.png" alt="Advisor" class="sprite-image" id="sprite-image">
+                <p id="advisor-text">...</p>
             </div>
         </div>
 
