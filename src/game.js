@@ -138,10 +138,12 @@ class GameLogic {
                 type: type,
                 purchasePrice: price,
                 currentValue: price});
+            saveGame(this);
             return true;
         }
         // If unable to buy it, return false
         else{
+            saveGame(this);
             return false;
         }
     }
@@ -157,6 +159,7 @@ class GameLogic {
             if (profit > 0){
                 this.xp += Math.floor(profit * 10);
             }
+        saveGame(this);
     }
 
     // Updates logic
@@ -223,6 +226,37 @@ class GameLogic {
         if (this.xp >= threshold){
             this.xp -= threshold;
             this.level += 1;
+        }
+    }
+}
+
+/*
+Functions that save game state for future games
+*/
+
+// Save game state into json file
+function saveGame(gameLogic) {
+    const gameState = {
+        cash: gameLogic.cash,
+        level: gameLogic.level,
+        xp: gameLogic.xp,
+        stockPrice: gameLogic.stock.price
+    };
+    localStorage.setItem('optionsGameState', JSON.stringify(gameState));
+}
+
+// Load game state from json file
+function loadGame(gameLogic) {
+    const saved = localStorage.getItem('optionsGameState');
+    if (saved) {
+        try {
+            const gameState = JSON.parse(saved);
+            gameLogic.cash = gameState.cash || 10;
+            gameLogic.level = gameState.level || 1;
+            gameLogic.xp = gameState.xp || 0;
+            gameLogic.stock.price = gameState.stockPrice || 100;
+        } catch (e) {
+            console.log('Failed to load saved game');
         }
     }
 }

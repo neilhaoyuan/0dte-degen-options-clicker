@@ -1,5 +1,6 @@
-// Create game instance
+// Create game instance, also load any previous saves
 let game = new GameLogic();
+loadGame(game);
 let previousPrice = game.stock.getPrice();
 let priceHistory = [game.stock.getPrice()]; // Store price history for chart
 
